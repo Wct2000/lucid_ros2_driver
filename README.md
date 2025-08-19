@@ -1,3 +1,8 @@
+# Lucid Vision Camera ROS2 Integration with YOLOv8
+### [YOLO-ROS Implementation](https://github.com/mgonzs13/yolo_ros?tab=readme-ov-file)
+
+Abstract — This project demonstrates connecting a **Lucid Vision Camera** to a host computer via Ethernet, communicating with it using **ROS2**, and streaming images to a **Docker container** running **YOLOv8** for real-time inference. The detected results are visualized in **RViz2**, enabling end-to-end perception pipelines for robotics and autonomous systems.
+
 **arena_camera**
 
 arena_camera node publishes image data collected from Lucid Vision Labs Triton GigE cameras in /lucid_vision/camera_"X"
