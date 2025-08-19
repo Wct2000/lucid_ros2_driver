@@ -86,7 +86,7 @@ Navigate to your ROS2 workspace
    
 # Clone the driver repository
 
-`git clone https://github.com/autowarefoundation/lucid_vision_driver.git`
+`git clone https://github.com/yourusername/lucid-ros2-yolov8.git`
 
 # Go back to workspace root
 `cd ~/ros2_ws`
