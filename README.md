@@ -51,6 +51,98 @@ This camera driver has been tested on ROS2 Galactic(Ubuntu 20.04) and ROS2 Humbl
 
    8.4 Be sure that the visibility button is checked.
 
+## Setup
+
+ROS Workspace Setup
+<details><summary>Create and Build ROS2 Workspace</summary>
+
+Create workspace
+
+`mkdir -p ~/ros2_ws/src`
+
+`cd ~/ros2_ws/src`
+
+`git clone https://github.com/yourusername/lucid-ros2-yolov8.git`
+
+`cd ~/ros2_ws`
+
+`colcon build`
+
+`source install/setup.bash`
+
+## Lucid Vision ROS2 Driver
+
+To interface the Lucid Vision Camera with ROS2, you need the official **Lucid Vision ROS2 driver**:
+
+- Repository: [autowarefoundation/lucid_vision_driver](https://github.com/autowarefoundation/lucid_vision_driver)
+
+### Installation
+
+<details><summary>Clone and Build the Driver</summary>
+Navigate to your ROS2 workspace
+
+   
+`cd ~/ros2_ws/src`
+   
+# Clone the driver repository
+
+`git clone https://github.com/autowarefoundation/lucid_vision_driver.git`
+
+# Go back to workspace root
+`cd ~/ros2_ws`
+
+# Install dependencies
+`rosdep install --from-paths src --ignore-src -r -y`
+
+# Build the workspace
+`colcon build`
+
+`source install/setup.bash`
+
+</details> 
+
+<details><summary>Launch the Camera Node</summary>
+
+   `ros2 launch lucid_vision_driver camera_launch.py`
+
+This node will publish the camera images to ROS2 topics, which can then be subscribed to by the YOLOv8 Docker container or visualized in RViz2.
+</details> 
+
+### Camera IP Configuration
+<details><summary>Set Static IP for Host Interface</summary>
+Configure the IP of the camera
+
+`sudo ip addr add 169.254.0.1/16 dev eth0`
+
+`sudo ip link set eth0 up`
+
+`ip addr show eth0`
+
+`ping 169.254.0.1`
+
+ </details> <details><summary>Set Static IP for Lucid Vision Camera</summary>
+Force set the IP of first camera
+    
+`./IpConfigUtility /force -i 0 -a "169.254.0.2" -s "255.255.0.0"`
+
+`ping 169.254.0.1`
+
+List connected cameras
+`./IpConfigUtility /list`
+
+Force set IP using MAC address
+`sudo ./IpConfigUtility /force -m <cameraMACaddress> -a "169.254.0.1" -s "255.255.0.0"`
+
+</details> <details><summary>Verify Network Traffic</summary>
+   
+`sudo tcpdump -i eth0`
+
+</details>
+
+
+
+</details>
+
 ### Camera Settings
 Camera settings can be made in two ways;
 
