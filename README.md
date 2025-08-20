@@ -182,6 +182,11 @@ Camera settings can be made in two ways;
    2. Load settings to the camera device.
    3. Run this driver using `use_default_device_settings` parameter as a `true`.
 
+## Enabling of multiple cameras being activated
+go to launch/test_node_container.launch.py
+
+Uncomment camera_param_path_camera<number>
+
 ## Camera Settings
 
 Camera configuration is managed through the `param.camera.yaml` file.  
@@ -228,7 +233,4 @@ Update it with the appropriate parameters for your setup. Example:
       history: "keep_last"
       depth: 10
 
-##Enabling of multiple cameras being activated
-go to launch/test_node_container.launch.py
 
-Uncomment camera_param_path_camera<number>
