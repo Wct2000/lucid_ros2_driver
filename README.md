@@ -185,7 +185,11 @@ Camera settings can be made in two ways;
 ## Enabling of multiple cameras being activated
 go to launch/test_node_container.launch.py
 
-Uncomment camera_param_path_camera<number>
+Uncomment camera_param_path_camera[number]
+
+Uncomment camera[number]
+
+Uncomment Camera_[number] at LaunchDescription
 
 ## Camera Settings
 
