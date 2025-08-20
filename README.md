@@ -115,7 +115,7 @@ source install/setup.bash
 <details><summary>Launch the Camera Node</summary>
 
    ```shell
-   ros2 launch lucid_vision_driver camera_launch.py
+   ros2 launch lucid_vision_driver test_node_container.launch.py
    ```
 
 This node will publish the camera images to ROS2 topics, which can then be subscribed to by the YOLOv8 Docker container or visualized in RViz2.
@@ -227,3 +227,8 @@ Update it with the appropriate parameters for your setup. Example:
       durability: "volatile"
       history: "keep_last"
       depth: 10
+
+##Enabling of multiple cameras being activated
+go to launch/test_node_container.launch.py
+
+Uncomment camera_param_path_camera<number>
