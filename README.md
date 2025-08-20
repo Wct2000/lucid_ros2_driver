@@ -30,18 +30,24 @@ This camera driver has been tested on ROS2 Galactic(Ubuntu 20.04) and ROS2 Humbl
 
 6. Build your code with the following command.
 
-   `colcon build `
+   ```shell 
+   colcon build 
+   ```
+8. Source the directory and run the executable with following command.
 
-7. Source the directory and run the executable with following command.
-
-   `ros2 launch arena_camera test_node_container.launch.py`
+   ```shell
+   ros2 launch arena_camera test_node_container.launch.py
+   ```
 
    7.1 You can check whether data is flowing or not and what is the rate of it with following commands.
 
-   `ros2 topic hz /lucid_vision/<your_camera>/image_raw`
-
-8. Open another terminal and run Rviz2 with following command.
-   `rviz2`
+   ```shell
+   ros2 topic hz /lucid_vision/<your_camera>/image_raw
+   ```
+10. Open another terminal and run Rviz2 with following command.
+   ```shell
+    rviz2
+   ```
 
    8.1 Add the /lucid_vision/<your_camera>/image_raw topic to Display panel. With following "Add">"By topic" section.
 
@@ -57,10 +63,11 @@ ROS Workspace Setup
 <details><summary>Create and Build ROS2 Workspace</summary>
 
 Create workspace
+```shell
+mkdir -p ~/ros2_ws/src
 
-`mkdir -p ~/ros2_ws/src`
-
-`cd ~/ros2_ws/src`
+cd ~/ros2_ws/src
+```
 
 ## Lucid Vision ROS2 Driver
 
@@ -74,28 +81,42 @@ To interface the Lucid Vision Camera with ROS2, you need the official **Lucid Vi
 Navigate to your ROS2 workspace
 
    
-`cd ~/ros2_ws/src`
+```shell
+cd ~/ros2_ws/src
+```
    
 # Clone the driver repository
 
-`git clone https://github.com/Wct2000/lucid_ros2_driver.git`
+```shell
+git clone https://github.com/Wct2000/lucid_ros2_driver.git
+```
 
 # Go back to workspace root
-`cd ~/ros2_ws`
+```shell
+cd ~/ros2_ws
+```
 
 # Install dependencies
-`rosdep install --from-paths src --ignore-src -r -y`
+```shell
+rosdep install --from-paths src --ignore-src -r -y
+```
 
 # Build the workspace
-`colcon build`
+```shell
+colcon build
+```
 
-`source install/setup.bash`
+```shell
+source install/setup.bash
+```
 
 </details> 
 
 <details><summary>Launch the Camera Node</summary>
 
-   `ros2 launch lucid_vision_driver camera_launch.py`
+   ```shell
+   ros2 launch lucid_vision_driver camera_launch.py
+   ```
 
 This node will publish the camera images to ROS2 topics, which can then be subscribed to by the YOLOv8 Docker container or visualized in RViz2.
 </details> 
@@ -104,30 +125,48 @@ This node will publish the camera images to ROS2 topics, which can then be subsc
 <details><summary>Set Static IP for Host Interface</summary>
 Configure the IP of the camera
 
-`sudo ip addr add 169.254.0.1/16 dev eth0`
+```shell
+sudo ip addr add 169.254.0.1/16 dev eth0
+```
 
-`sudo ip link set eth0 up`
+```shell
+sudo ip link set eth0 up
+```
 
-`ip addr show eth0`
+```shell
+ip addr show eth0
+```
 
-`ping 169.254.0.1`
+```shell
+ping 169.254.0.1
+```
 
  </details> <details><summary>Set Static IP for Lucid Vision Camera</summary>
 Force set the IP of first camera (IP 169.254.0.2) as an example
     
-`./IpConfigUtility /force -i 0 -a "169.254.0.2" -s "255.255.0.0"`
+```shell
+./IpConfigUtility /force -i 0 -a "169.254.0.2" -s "255.255.0.0"
+```
 
-`ping 169.254.0.1`
+```shell
+ping 169.254.0.1
+```
 
 List connected cameras
-`./IpConfigUtility /list`
+```shell
+./IpConfigUtility /list
+```
 
 Force set IP using MAC address
-`sudo ./IpConfigUtility /force -m <cameraMACaddress> -a "169.254.0.1" -s "255.255.0.0"`
+```shell
+sudo ./IpConfigUtility /force -m <cameraMACaddress> -a "169.254.0.1" -s "255.255.0.0"
+```
 
 </details> <details><summary>Verify Network Traffic</summary>
    
-`sudo tcpdump -i eth0`
+```shell
+sudo tcpdump -i eth0
+```
 
 </details>
 
