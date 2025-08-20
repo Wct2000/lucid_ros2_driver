@@ -47,7 +47,7 @@ This camera driver has been tested on ROS2 Galactic(Ubuntu 20.04) and ROS2 Humbl
 
    8.2 Set your "Fixed Frame" as "lucid_vision".
 
-   8.3 Set your "Reliability Policy" to "Best Efford".  (Best effort works in UDP, Reliable works in TCP/IP)
+   8.3 Set your "Reliability Policy" to "Best Effort".  (Best effort works in UDP, Reliable works in TCP/IP)
 
    8.4 Be sure that the visibility button is checked.
 
@@ -86,7 +86,7 @@ Navigate to your ROS2 workspace
    
 # Clone the driver repository
 
-`git clone https://github.com/yourusername/lucid-ros2-yolov8.git`
+`git clone https://github.com/Wct2000/lucid_ros2_driver.git`
 
 # Go back to workspace root
 `cd ~/ros2_ws`
@@ -121,7 +121,7 @@ Configure the IP of the camera
 `ping 169.254.0.1`
 
  </details> <details><summary>Set Static IP for Lucid Vision Camera</summary>
-Force set the IP of first camera
+Force set the IP of first camera (IP 169.254.0.2) as an example
     
 `./IpConfigUtility /force -i 0 -a "169.254.0.2" -s "255.255.0.0"`
 
@@ -151,19 +151,48 @@ Camera settings can be made in two ways;
    2. Load settings to the camera device.
    3. Run this driver using `use_default_device_settings` parameter as a `true`.
 
-2. Change camera setting with rqt_reconfigure.
+## Camera Settings
 
-   1. Open the terminal and run rqt_reconfigure with the following command.
-   
-      `ros2 run rqt_reconfigure rqt_reconfigure`
+Camera configuration is managed through the `param.camera.yaml` file.  
+Update it with the appropriate parameters for your setup. Example:
 
-   2. Change your camera settings with rqt_reconfigure GUI. Choose your camera from the list and change your settings.
-      Choose desired exposure, gain and gamma values. You can also change the FPS of the image.
-      (You can change your settings with ROS2 parameters too. You can find the parameters in the param file.)
+/**:
 
-   3. Dump your camera settings with the following command.
-   
-      `ros2 param dump /arena_camera_node --output-dir <your_workspace>/src/arena_camera/param/`
-      
-      Run the camera node with the new param file.
-      `ros2 run arena_camera arena_camera_node_exe --ros-args --params-file <your_workspace>/src/arena_camera/param/arena_camera_node.yaml`
+  # file
+    ros__parameters:
+    camera_name: "camera_1"
+    frame_id: "camera_top/camera_link"
+    pixel_format: rgb8
+    serial_no: <serialnumber>
+    camera_info_url: "file:///path/to//camera_1fullres.yaml"
+    fps: 15
+
+    # Image scaling (binning)
+    horizontal_binning: 4   # resize horizontal resolution/horizontal_binning
+    vertical_binning: 4     # resize vertical resolution/vertical_binning
+
+    # Image processing
+    enable_rectifying: true
+    enable_compressing: true
+
+    # Device settings
+    use_default_device_settings: false
+    # If set to true, the following manual settings are ignored.
+    # The camera will use its built-in default device settings.
+
+    exposure_auto: false
+    exposure_target: 65000
+    gain_auto: false
+    gain_target: 30
+    gamma_target: 0.2
+
+    # Image orientation
+    image_horizontal_flip: true
+    image_vertical_flip: true
+
+    # QoS settings
+    qos:
+      reliability: "best effort"
+      durability: "volatile"
+      history: "keep_last"
+      depth: 10
